@@ -8,10 +8,11 @@ T_total = 10000;
 init_number = 1;
 syn_control = ROIsize;
 prob_stay = 0.5;
+trans_rate = 1;
 % load your GBA, SNCA, sconnDen, sconnLen, ROISize ....
 
 %%%%% simulation ------ >>>
-[Rnor_all, Rmis_all, Rnor0] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay);
+[Rnor_all, Rmis_all, Rnor0] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay, trans_rate);
 ratio = Rmis_all ./(Rnor_all + Rmis_all) ;
 ratio(isnan(ratio)) = 0; % remove possible NaNs...
 
