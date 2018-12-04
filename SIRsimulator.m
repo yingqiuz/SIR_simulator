@@ -1,5 +1,5 @@
 % SIRsimulator.m
-function [Rnor_all, Rmis_all, Rnor0, Pnor0, Pnor_all, Pmis_all] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay)
+function [Rnor_all, Rmis_all, Rnor0, Pnor0, Pnor_all, Pmis_all] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay, trans_rate)
 % A function to simulate the spread of misfolded alpha-syn
 
 %% input parameters (inside parenthesis are values used in the paper)
@@ -7,8 +7,8 @@ function [Rnor_all, Rmis_all, Rnor0, Pnor0, Pnor_all, Pmis_all] = SIRsimulator(N
 % v: speed (1)
 % dt: time step (0.01)
 % T_total: total time steps (10000)
-% GBA: GBA gene expression (zscore) (empirical GBA expression)
-% SNCA: SNCA gene expression after normalization (zscore) (empirical SNCA expression)
+% GBA: GBA gene expression (zscore, N_regions * 1 vector) (empirical GBA expression)
+% SNCA: SNCA gene expression after normalization (zscore, N_regions * 1 vector) (empirical SNCA expression)
 % sconnLen: structural connectivity matrix (length) (estimated from HCP data)
 % sconnDen: structural connectivity matrix (strength) (estimated from HCP data)
 % ROIsize: region sizes (voxel counts)
@@ -17,6 +17,7 @@ function [Rnor_all, Rmis_all, Rnor0, Pnor0, Pnor_all, Pmis_all] = SIRsimulator(N
 % alpha-syn may get synthesized (region size, i.e., ROIsize)
 % init_number: number of injected misfolded alpha-syn (1)
 % prob_stay: the probability of staying in the same region per unit time (0.5)
+% trans_rate: a scalar value, controlling the baseline infectivity
 
 %% output parameters
 % Rnor_all: A N_regions * T_total matrix, recording the number of normal
@@ -57,6 +58,7 @@ synthesis_rate = normcdf(zscore(SNCA));
 %% normal alpha-syn growth 
 % fill the network with normal proteins
 iter_max = 1000000000;
+display('normal alpha synuclein growth')
 for t = 1:iter_max   
     %%% moving process
     % regions towards paths
@@ -93,7 +95,7 @@ Rnor0 = Rnor;
 
 % inject misfolded alpha-syn
 Rmis(seed) = init_number;
-
+display('misfolded alpha synuclein spreading')
 for t = 1:T_total
     %%% moving process
     % normal proteins: region -->> paths
@@ -125,7 +127,7 @@ for t = 1:T_total
     Rnor_cleared = Rnor .* (1-exp(-clearance_rate.* dt)) ;
     Rmis_cleared = Rmis .* (1-exp(-clearance_rate.* dt))  ;
     % the probability of getting misfolded
-    gamma0 = 1./ROIsize;
+    gamma0 = 1 .* trans_rate ./ROIsize;
     misProb = 1 - exp( -Rmis .* gamma0 .* dt ) ; % trans_rate: default
     % number of newly infected
     N_misfolded = Rnor .* exp(-clearance_rate) .* misProb ;
