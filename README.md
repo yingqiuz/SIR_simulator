@@ -53,3 +53,6 @@ ratio_cum = k2 * ratio_cum + k1 * (1-exp(-ratio * dt));
 % add all the increments across t
 simulated_atrophy = cumsum(ratio_cum, 2);
 ```
+
+## Bugs and Questions
+Please contain Ying-Qiu Zheng at [yingqiu.zheng@mail.mcgill.ca](yingqiu.zheng@mail.mcgill.ca)
