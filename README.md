@@ -31,7 +31,7 @@ load('data/42regions/workspace.mat');
 load('data/42regions/sc35.mat');
 ```
 This will load GBA and SNCA expressions (`GBA` and `SNCA`), connectivity length `sconnLen`, connectivity strength `sconnDen`, region size `ROIsize` to your workspace
- - Run the model `[Rnor_all, Rmis_all, Rnor0] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay, trans_rate);`. The region-wise numbers of normal and misfolded proteins are stored in `Rnor_all` and `Rmis_all`, with `Rnor0` being the number of normal proteins at healthy state.
+ - Run the model ```[Rnor_all, Rmis_all, Rnor0] = SIRsimulator(N_regions, v, dt, T_total, GBA, SNCA, sconnLen, sconnDen, ROIsize, seed, syn_control, init_number, prob_stay, trans_rate);```. The region-wise numbers of normal and misfolded proteins are stored in `Rnor_all` and `Rmis_all`, with `Rnor0` being the number of normal proteins at healthy state.
  - Simulate regional atrophy growth. This involves another two parameters to control contribution of deafferentation and endogenous neuronal death. For example, if the two factors have equal contribution:
 ```matlab
 k1 = 0.5;
