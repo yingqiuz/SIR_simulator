@@ -7,7 +7,9 @@ This project contains the source code for an agent-based Suspectible-Infectious-
  - SIRsimulator.m: a function to simulate the spread of misfolded alpha-synuclein
 
  - main.m: a demo script to simulate neuronal loss
- - ![data](https://github.com/yingqiuz/SIR_simulator/tree/master/data) folder contains the connectivity and gene expression data required by the model
- - ![](results)(https://github.com/yingqiuz/SIR_simulator/tree/master/results) contains the scripts to generate the figures.
+ - [data](https://github.com/yingqiuz/SIR_simulator/tree/master/data) folder contains the connectivity and gene expression data required by the model
+ - [results](https://github.com/yingqiuz/SIR_simulator/tree/master/results) contains the scripts to generate the figures.
 
 ## Getting Started
+ - Specify number of regions `N_regions`
+ - Load gene expressions, atrophy, region size, functional and structural connectivity
